@@ -47,9 +47,9 @@ const CountryCodeModal: React.FC<CountryCodeModalProps> = ({
   if (searchQuery.trim() === "") {
     const prioritizedOrder = [
       "United Kingdom",
-      "United States",
       "Ireland",
-      "Australia",
+      "United States",
+      "Australia", 
     ];
     const prioritized = filteredCountries
       .filter((c) => prioritizedOrder.includes(c.name))
