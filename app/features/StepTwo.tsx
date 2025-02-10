@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, Text, TextInput, TouchableOpacity, } from "react-native";
+import { View, Text, TextInput, TouchableOpacity } from "react-native";
 import { SvgXml } from "react-native-svg";
 import { useFormStore } from "@/store/useFormStore";
 import CountryCodeModal from "../components/CountryCodeModal";
@@ -8,6 +8,7 @@ import { validatePhoneNumber } from "../utils/validation";
 import { stepTwoStyles as styles } from "./../styles/StepTwo.styles";
 import { warningIconSvg } from "../utils/svgs";
 import { termsAndConditions, privacyPolicy } from "../utils/legalTexts";
+import { arrowIconSvg } from "../utils/svgs";
 
 const StepTwo: React.FC = () => {
   const { formData, setFormData, nextStep } = useFormStore();
@@ -36,8 +37,10 @@ const StepTwo: React.FC = () => {
             style={[styles.countryButton, errors.phoneNumber && styles.errorBorder]}
             onPress={() => setIsCountryModalOpen(true)}
           >
-            <Text style={styles.countryText}>{formData.countryCode} ▼</Text>
-            
+            <View style={{ flexDirection: "row", alignItems: "center" }}>
+              <Text style={styles.countryText}>{formData.countryCode} </Text>
+              <SvgXml xml={arrowIconSvg} width="10" height="6"/>
+            </View>
           </TouchableOpacity>
 
           <TextInput

@@ -1,79 +1,69 @@
-import React, { useState } from "react";
-import { View, StyleSheet, Animated } from "react-native";
+import React, { useEffect, useRef } from "react";
+import { Animated, StyleSheet, View } from "react-native";
 import { useFormStore } from "@/store/useFormStore";
 import StepOne from "../features/StepOne";
 import StepTwo from "../features/StepTwo";
 import SuccessScreen from "../features/SuccessScreen";
-import Layout from "../components/Layout";
-import "nativewind";
+import Layout from "./Layout";
 
-/**
- * MultiStepForm Component (React Native)
- */
 const MultiStepForm = () => {
-  const { step, restartForm } = useFormStore();
+  const { step, reset } = useFormStore();
+  const animationValue = useRef(new Animated.Value(0)).current;
 
-  // ✅ Define missing state variables
-  const [isCountryModalOpen, setIsCountryModalOpen] = useState(false);
-  const [isTermsOpen, setIsTermsOpen] = useState(false);   // ✅ Add this
-  const [isPrivacyOpen, setIsPrivacyOpen] = useState(false); // ✅ Add this
-  console.log("Current step:", step);
+  useEffect(() => {
+    // If moving to step 3, show it without animation
+    if (step === 3) {
+      animationValue.setValue(1);
+    } else {
+      animationValue.setValue(0);
+      Animated.timing(animationValue, {
+        toValue: 1,
+        duration: 200,
+        useNativeDriver: true,
+      }).start();
+    }
+  }, [step, animationValue]);
+
+  let content;
+  if (step === 1) {
+    content = <StepOne />;
+  } else if (step === 2) {
+    content = <StepTwo />;
+  } else {
+    content = <SuccessScreen onRestart={reset} />;
+  }
+
+  const animatedStyle = {
+    transform: [
+      {
+        translateX: animationValue.interpolate({
+          inputRange: [0, 1],
+          outputRange: [50, 0], // Slide in from 50px to the right
+        }),
+      },
+    ],
+    opacity: animationValue, // Fade in effect
+  };
 
   return (
-    <Layout isModalOpen={isCountryModalOpen} hideHeader={step === 3}>
+    // Pass hideHeader as true when step is 3 to hide logo and step indicators
+    <Layout hideHeader={step === 3}>
       <View style={styles.container}>
-        {/* Step One */}
-        {step === 1 && (
-          <Animated.View style={[styles.step, step === 1 && styles.activeStep]}>
-            <StepOne />
-          </Animated.View>
-        )}
-
-        {/* Step Two */}
-        {step === 2 && (
-          <Animated.View style={[styles.step, step === 2 && styles.activeStep]}>
-            <StepTwo 
-              isModalOpen={isCountryModalOpen}
-              setIsModalOpen={setIsCountryModalOpen}
-              isTermsOpen={isTermsOpen}  // ✅ Pass the correct state
-              setIsTermsOpen={setIsTermsOpen} // ✅ Pass the correct setter function
-              isPrivacyOpen={isPrivacyOpen}  // ✅ Pass the correct state
-              setIsPrivacyOpen={setIsPrivacyOpen} // ✅ Pass the correct setter function
-            />
-          </Animated.View>
-        )}
-
-        {/* Success Screen */}
-        {step === 3 && (
-          <Animated.View style={[styles.step, step === 3 && styles.activeStep]}>
-            <SuccessScreen onRestart={restartForm} />
-          </Animated.View>
-        )}
+        <Animated.View style={[styles.animatedContainer, animatedStyle]}>
+          {content}
+        </Animated.View>
       </View>
     </Layout>
-    
   );
 };
 
-// Styles
+export default MultiStepForm;
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    width: "100%",
-    height: "100%",
-    overflow: "hidden",
   },
-  step: {
-    position: "absolute",
-    width: "100%",
-    height: "100%",
-    opacity: 0,
-    transform: [{ translateX: 500 }],
-  },
-  activeStep: {
-    opacity: 1,
-    transform: [{ translateX: 0 }],
+  animatedContainer: {
+    flex: 1,
   },
 });
-
-export default MultiStepForm;

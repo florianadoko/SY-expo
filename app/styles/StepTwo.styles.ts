@@ -35,6 +35,7 @@ export const stepTwoStyles = StyleSheet.create({
     fontSize: 16,
     fontWeight: "500",
     color: "#021626",
+    paddingRight:8
   },
   input: {
     flex: 1,

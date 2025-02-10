@@ -1,34 +1,49 @@
-import { create } from "zustand";
+// store/useFormStore.ts
+import {create} from "zustand";
 
 interface FormData {
   firstName: string;
   lastName: string;
-  email: string;
   phoneNumber: string;
   countryCode: string;
 }
 
 interface FormStore {
-  formData: FormData;
   step: number;
-  setFormData: (updates: Partial<FormData>) => void;
+  formData: FormData;
+
+  setFormData: (data: Partial<FormData>) => void;
   nextStep: () => void;
   prevStep: () => void;
-  restartForm: () => void;
+  reset: () => void;
 }
 
-export const useFormStore = create<FormStore>((set) => ({
+// Define your initial state here for clarity.
+const initialState: FormStore = {
+  step: 1,
   formData: {
     firstName: "",
     lastName: "",
-    email: "",
     phoneNumber: "",
-    countryCode: "+44",
+    countryCode: "+1",
   },
-  step: 1,
-  
-  setFormData: (updates) => set((state) => ({ formData: { ...state.formData, ...updates } })),
+  // Dummy functions – will be replaced by our store setup below.
+  setFormData: () => {},
+  nextStep: () => {},
+  prevStep: () => {},
+  reset: () => {},
+};
+
+export const useFormStore = create<FormStore>((set) => ({
+  step: initialState.step,
+  formData: initialState.formData,
+  setFormData: (data: Partial<FormData>) =>
+    set((state) => ({ formData: { ...state.formData, ...data } })),
   nextStep: () => set((state) => ({ step: state.step + 1 })),
   prevStep: () => set((state) => ({ step: state.step - 1 })),
-  restartForm: () => set(() => ({ step: 1, formData: { firstName: "", lastName: "", email: "", phoneNumber: "", countryCode: "+44" } })),
+  reset: () =>
+    set({
+      step: initialState.step,
+      formData: initialState.formData,
+    }),
 }));

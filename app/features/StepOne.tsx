@@ -19,7 +19,6 @@ const StepOne = () => {
   const { formData, setFormData, nextStep } = useFormStore();
   const [errors, setErrors] = useState<{ firstName?: string; lastName?: string }>({});
   const [isKeyboardVisible, setIsKeyboardVisible] = useState(false); 
-
   useEffect(() => {
     const keyboardDidShowListener = Keyboard.addListener("keyboardDidShow", () => {
       setIsKeyboardVisible(true);

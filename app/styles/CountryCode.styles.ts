@@ -3,30 +3,39 @@ import { StyleSheet } from "react-native";
 export const styles = StyleSheet.create({
   modalContainer: {
     flex: 1,
-    backgroundColor: "white", // Full-screen white background
-    paddingTop: 70,
+    backgroundColor: "white",
     paddingHorizontal: 10,
     width: "100%",
     height: "100%",
+    position: "relative",
+    paddingTop:60
+  },
+  fixedSearchBar: {
     position: "absolute",
     top: 0,
     left: 0,
+    right: 0,
+    zIndex: 2,
+    paddingTop: 60,
+    backgroundColor:"white",
   },
   searchRow: {
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
-    marginBottom: 10,
+    marginHorizontal: 10,
+    marginVertical: 10,
   },
   searchContainer: {
     flexDirection: "row",
     alignItems: "center",
-    borderColor: "#D1D5DB",
+    borderColor: "#0D71C9",
     borderRadius: 25,
     paddingHorizontal: 12,
     height: 45,
     flex: 1,
     borderWidth: 2,
+    backgroundColor: "rgba(255, 255, 255, 0.6)",
   },
   searchFocused: {
     borderColor: "#0D71C9",
@@ -37,7 +46,6 @@ export const styles = StyleSheet.create({
     fontSize: 16,
     marginLeft: 8,
     paddingVertical: 10,
-    // color: "#021626",
   },
   searchIcon: {
     marginRight: 8,
@@ -55,26 +63,30 @@ export const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     paddingVertical: 12,
-
   },
   countryItemPressed: {
-    backgroundColor: "rgba(2, 22, 38, 0.04)", // Background color on press (or hover on web)
+    backgroundColor: "rgba(2, 22, 38, 0.04)",
   },
   countryText: {
     fontSize: 16,
     color: "#021626",
   },
   flagContainer: {
-    width: 40, // Increased width
-    height: 40, // Increased height
-    borderRadius: 20, // Half of width/height for a perfect circle
+    width: 40,
+    height: 40,
+    borderRadius: 20,
     overflow: "hidden",
     backgroundColor: "white",
     marginRight: 12,
-    alignItems: "center", // Center the flag horizontally
-    justifyContent: "center", // Center the flag vertically
+    alignItems: "center",
+    justifyContent: "center",
   },
   flagText: {
-    fontSize: 40, // Increased font size to better fill the container
+    fontSize: 40,
+  },
+  separator: {
+    height: 1,
+    backgroundColor: "#ccc",
+    marginVertical: 8,
   },
 });
