@@ -1,39 +1,42 @@
-import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native';
-import { useFonts } from 'expo-font';
-import { Stack } from 'expo-router';
-import * as SplashScreen from 'expo-splash-screen';
-import { StatusBar } from 'expo-status-bar';
-import { useEffect } from 'react';
-import 'react-native-reanimated';
+// import React from 'react';
+// import StepIndicator from '@/app/components/StepIndicator';
+// import { useFormStore } from '@/store/useFormStore';
+// import { Image } from 'react-native';
+// import BackIcon from "../images/BackIcon.svg"; // Import your SVG file
+// import Logo25 from "../images/Logo25.svg"; // Import your SVG file
 
-import { useColorScheme } from '@/hooks/useColorScheme';
+// interface LayoutProps {
+//   children: React.ReactNode;
+//   isModalOpen?: boolean;
+//   hideHeader?: boolean;
+// }
 
-// Prevent the splash screen from auto-hiding before asset loading is complete.
-SplashScreen.preventAutoHideAsync();
+// const Layout: React.FC<LayoutProps> = ({ children, isModalOpen = false, hideHeader = false }) => {
+//   const { step, prevStep } = useFormStore();
 
-export default function RootLayout() {
-  const colorScheme = useColorScheme();
-  const [loaded] = useFonts({
-    SpaceMono: require('../assets/fonts/SpaceMono-Regular.ttf'),
-  });
+//   return (
+//     <div className="w-[393px] h-[852px] mx-auto px-4 sm:px-8 relative">
+//       {!hideHeader && !isModalOpen && (
+//         <>
+//           {step > 1 && (
+//             <button onClick={prevStep} className="absolute top-[50px] left-4 p-2" aria-label="Go back">
+//               {/* <img src="/images/BackIcon.svg" alt="BackIcon" /> */}
+//               {/* <Image source={require('./../images/BackIcon.svg')} /> */}
+// <BackIcon/>
+//             </button>
+//           )}
+//           <div className="p-4 flex justify-center items-center mt-[59px] mb-2">
+//             {/* <img src="/images/Logo25.svg" alt="Logo" className="w-[56px] h-[56px]" /> */}
+//             {/* <Image source={require('./../images/Logo25.svg')} style={{ width: 56, height: 56 }}/> */}
+//             <Logo25/>
+            
+//           </div>
+//           <StepIndicator />
+//         </>
+//       )}
+//       {children}
+//     </div>
+//   );
+// };
 
-  useEffect(() => {
-    if (loaded) {
-      SplashScreen.hideAsync();
-    }
-  }, [loaded]);
-
-  if (!loaded) {
-    return null;
-  }
-
-  return (
-    <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-      <Stack>
-        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-        <Stack.Screen name="+not-found" />
-      </Stack>
-      <StatusBar style="auto" />
-    </ThemeProvider>
-  );
-}
+// export default Layout;
